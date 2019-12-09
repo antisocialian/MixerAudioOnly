@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mixer Audio Only
 // @namespace    https://github.com/antisocialian/MixerAudioOnly
-// @version      0.4
+// @version      0.5
 // @description  Set streams to audio-only depending on the state of a checkbox/cookie
 // @author       antisocialian
 // @match        *mixer.com/*

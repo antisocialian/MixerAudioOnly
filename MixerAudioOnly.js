@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mixer Audio Only
 // @namespace    https://github.com/antisocialian/MixerAudioOnly
-// @version      0.6
+// @version      0.6.1
 // @description  Set streams to audio-only depending on the state of a checkbox/cookie
 // @author       antisocialian
 // @match        *mixer.com/*
@@ -31,7 +31,7 @@
         clearInterval(intervalnav);
 
         //add the checkbox along the top menu on the page and add hook to its onClick() event
-        var navbar = document.getElementsByClassName("left_2-1r8");
+        var navbar = document.getElementsByClassName("stickly-sentinel");
         console.error(navbar.length);
         navbar[0].insertAdjacentHTML("beforeend", "<label _ngcontent-c5 class='nav-link'><input type='checkbox' id='chkaudioOnly' value='audioOnly'> Audio Only</label>");
         m = document.getElementById("chkaudioOnly");

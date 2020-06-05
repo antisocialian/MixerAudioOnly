@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mixer Audio Only
 // @namespace    https://github.com/antisocialian/MixerAudioOnly
-// @version      0.6.1
+// @version      0.6.2
 // @description  Set streams to audio-only depending on the state of a checkbox/cookie
 // @author       antisocialian
 // @match        *mixer.com/*
@@ -31,9 +31,20 @@
         clearInterval(intervalnav);
 
         //add the checkbox along the top menu on the page and add hook to its onClick() event
-        var navbar = document.getElementsByClassName("stickly-sentinel");
+        var navbar = document.getElementsByTagName("div");
+        var i,leftDiv,j;
+        //due to the site changing the name of the class of teh <div> that we want to insert into (seems to always start with "left_" but then changes the next few characters to reflect something)
+        //we're going to need to look thru each div and find the one that's class starts with "left_", might need to be more drastic on insertion later if this gets changed
+        for (i = 0; i < navbar.length; i++) {
+            for (j = 0; j < navbar[i].attributes.length; j++) {
+                if (navbar[i].attributes[j].value.startsWith("left_")) {
+                    leftDiv = i;
+                }
+            }
+        }
+
         console.error(navbar.length);
-        navbar[0].insertAdjacentHTML("beforeend", "<label _ngcontent-c5 class='nav-link'><input type='checkbox' id='chkaudioOnly' value='audioOnly'> Audio Only</label>");
+        navbar[leftDiv].insertAdjacentHTML("beforeend", "<label _ngcontent-c5 class='nav-link'><input type='checkbox' id='chkaudioOnly' value='audioOnly'> Audio Only</label>");
         m = document.getElementById("chkaudioOnly");
         m.addEventListener('click', tglAO, false);
     }
@@ -41,7 +52,6 @@
     //this is the event for the checkbox onClick() hook
     //it should set the global variable to the state of the checkbox, then set the cookie, then redo the audio-only button, and finally stop/start the interval function again
     function tglAO() {
-        //var tmpAO = m.checked;
         if(m){
             audioOnly = m.checked;
         }

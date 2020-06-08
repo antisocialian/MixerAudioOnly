@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Mixer Audio Only
 // @namespace    https://github.com/antisocialian/MixerAudioOnly
-// @version      0.6.2
+// @version      0.7
 // @description  Set streams to audio-only depending on the state of a checkbox/cookie
 // @author       antisocialian
 // @match        *mixer.com/*
@@ -107,7 +107,11 @@
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires;
+        //i did modify this part to include the info we want/need/have no idea about but thought it would be cool
+        //in theory, this should restrict the cookie to the streamers page, so that unchecking the box on one page will not affect any other pages you may have open at the same time.
+        //the SameSite stuff i don't really understand, but something in the console was bitching about cookies so i put something there ¯\_(ツ)_/¯
+        var cookie = cname + "=" + cvalue + "; " + expires + "; path=" + location.pathname + "; SameSite=Lax" + "; Secure";
+        document.cookie = cookie;
     }
 
     //copied from w3schools.com/js/js_cookies.asp
